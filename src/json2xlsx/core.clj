@@ -1,37 +1,43 @@
 (ns json2xlsx.core
   (:gen-class)
-  (:require [dk.ative.docjure.spreadsheet :refer [create-workbook save-workbook!]]
-            [cheshire.core :refer [parse-string]]
-            [clojure.java.io :refer [delete-file]]))
+  (:require [clojure.tools.cli :refer [parse-opts]]
+            [clojure.java.io :refer [delete-file]]
+            [cheshire.core :refer [parse-stream]]
+            [dk.ative.docjure.spreadsheet :refer [create-workbook
+                                                  save-workbook!]]))
 
-;; https://stackoverflow.com/questions/23018870/how-to-read-a-whole-binary-file-nippy-into-byte-array-in-clojure
+(def ^:private cli-options
+  [["-i" "--input FILE" "Input file"
+    :default "-"]
+   ["-o" "--output FILE" "Output file"
+    :default "out.xlsx"]
+   ["-v" nil "Verbosity level"
+    :id :verbosity
+    :default 0
+    :assoc-fn (fn [m k _] (update-in m [k] inc))]
+   ["-h" "--help"]])
 
-(defn- utf8-string [s]
-  (String. s "UTF-8"))
-
-(defn- tmpdir []
-  (or (System/getenv "TMPDIR") "/tmp"))
-
-;; TODO maybe use (.deleteOnExit my-temp-file)
-(defn- tmpfile []
-  (java.io.File/createTempFile "spreadsheet_" ".xslx"));; (tmpdir)))
+(defn- source
+  "Returns *in* if `filename` is `-`, otherwise returns a reader for
+  `filename`"
+  [filename]
+  (if (= filename "-")
+    *in*
+    (clojure.java.io/reader filename)))
 
 (defn -main
   [& args]
-  ;; TODO make tmp file
-  (let [file (tmpfile)]
-    ;;(println path)
-    (->> *in*
-         slurp
-         ;;print
-         ;;;;utf8-string
-         parse-string ;; maybe use parse-stream
-         ;;;; check against spec
-         (create-workbook "plan")
-         (save-workbook! "x.xslx")
-         )
-    ;;(print (.getAbsolutePath file))
-    (print (slurp (java.io.File. "x.xslx")))
-    ;;(delete-file path)
-
-    ))
+  (let [opts (parse-opts args cli-options)
+        output (-> opts :options :output)]
+    (when (-> opts :options :help)
+      (-> opts :summary println)
+      (System/exit 0))
+    (->> opts
+         :options
+         :input
+         source
+         parse-stream
+         (create-workbook "Sheet")
+         ;; TODO before, check against spec
+         (save-workbook! output))
+    (println (str "XSLX written to: " output))))
