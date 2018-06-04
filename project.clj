@@ -9,4 +9,10 @@
                  [cheshire "5.8.0"]]
   :main ^:skip-aot json2xlsx.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}
+             :dev {:plugins [[lein-binplus "0.6.4"]]}}
+
+  :bin {:name "json2xlsx"
+        :bin-path "~/bin"
+        :bootclasspath false
+        :jvm-opts ["-server" "-Dfile.encoding=utf-8" "$JVM_OPTS" ]})
