@@ -2,6 +2,10 @@
 
 FIXME: description
 
+## Building
+
+`lein bin`
+
 ## Installation
 
 Download from http://example.com/FIXME.
