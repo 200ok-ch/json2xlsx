@@ -1,0 +1,64 @@
+#+begin_example
+   _                 ____       _
+  (_)___  ___  _ __ |___ \__  _| |_____  __
+  | / __|/ _ \| '_ \  __) \ \/ / / __\ \/ /
+  | \__ \ (_) | | | |/ __/ >  <| \__ \>  <
+ _/ |___/\___/|_| |_|_____/_/\_\_|___/_/\_\
+|__/
+
+#+end_example
+
+* NAME
+
+=json2xlsx= - Convert a JSON data structure to an Excel compatible
+xlsx file.
+
+* SYNOPSIS
+
+  #+begin_example
+  Usage: json2xlsx [options]
+          -i, --input FILE   -            Input file
+          -o, --output FILE  output.xlsx  Output file
+          -v                              Verbosity level
+          -h, --help
+  #+end_example
+
+* DESCRIPTION
+
+=json2xlsx= makes it trivial to generate Excel compatible spreadsheets
+on any operating system Clojure supports.
+
+* EXAMPLES
+
+Create a demo Excel file:
+
+#+begin_example
+  $ echo '{"foo":"bar"}' | json2xlsx -o demo.xlsx
+  XSLX written to: demo.xlsx
+#+end_example
+
+* INSTALLATION
+
+=json2xlsx= is implemented in Clojure and yields a single binary. You
+can download it from https://github.com/200ok-ch/json2xlsx/releases/.
+
+* DEVELOPMENT
+
+=json2xlsx= is implemented in [[https://clojure.org/][Clojure]], dependencies are managed with
+[[https://leiningen.org/][Leiningen]].
+
+After checking out the repo, run =lein install= to install dependencies.
+You can also run =lein repl= for an interactive REPL that will
+allow you to experiment.
+
+To build a new version of =json2xlsx= as a binary onto your local
+machine, run =lein=.
+
+# * TESTS
+
+# Tests are implemented with [[https://rspec.info/][RSpec]] and can be run with =bundle exec
+# rspec spec=.
+
+# * NOTES
+
+# * SEE ALSO
