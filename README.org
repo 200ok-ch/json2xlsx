@@ -52,7 +52,8 @@ You can also run =lein repl= for an interactive REPL that will
 allow you to experiment.
 
 To build a new version of =json2xlsx= as a binary onto your local
-machine, run =lein=.
+machine, run =lein bin=. The resulting binary will be in the
+=target/base+system+user+dev= folder.
 
 # * TESTS
 

@@ -10,7 +10,7 @@
   :main ^:skip-aot json2xlsx.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}
-             :dev {:plugins [[lein-binplus "0.6.4"]]}}
+             :dev {:plugins [[lein-binplus "0.6.6"]]}}
 
   :bin {:name "json2xlsx"
         :bin-path "~/bin"
