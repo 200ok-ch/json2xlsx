@@ -33,7 +33,7 @@ on any operating system Clojure supports.
 Create a demo Excel file:
 
 #+begin_example
-  $ echo '{"foo":"bar"}' | json2xlsx -o demo.xlsx
+  $ echo '[["A1", "A2"],["foo","bar"]]' | json2xlsx -o demo.xlsx
   XSLX written to: demo.xlsx
 #+end_example
 
